@@ -6,13 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>The Last Bet</title>
+    
 </head>
 <body>
+    <!-- Start of my stuff -->
+    <input type="button" id="btn" value="click me!">
+    <!-- End of my stuff -->
     <div>
         <canvas id="myCanvas" width="800" height="500"></canvas>
         <!-- Display Money var on screen-->
        <script>
-        var Money = 100
+        //Start of my stuff
+        var clickButton = document.getElementById("btn")
+        var output = document.getElementById("output")
+        //End of my stuff
+        
+        var Money = 1000
+        var clicksButton = 1
+
+
+        //Start of my stuff
+        function increment()
+{
+    //add clicks
+    Money -= clicksButton;
+
+    //change the innerHTML to the current amount of clicks
+    output.innerHTML = Money;
+
+
+}
+        //End of my stuff
+        clickButton.addEventListener("click",increment)
+
         var canvas = document.getElementById("myCanvas");
         var ctx = canvas.getContext("2d");
         ctx.font = "30px Arial";
