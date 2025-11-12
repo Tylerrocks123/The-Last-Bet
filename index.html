@@ -8,32 +8,84 @@
     <title>The Last Bet</title>
 </head>
 <body>
+    <!--<img id="dollar" width="200" height="200"
+    src="/images/d.jpg" alt="Dollar"> -->
     <div>
-        <canvas id="myCanvas" width="800" height="500"></canvas>
-        <!-- Display Money var on screen-->
-       <script>
-        var Money = 100
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
+         <!--button-->
+  <button id="gbtn" style="position: absolute; top: 345px; left: 268px;background-color: red;"><b>Gamble!</b></button>
+  <button id="mult+" style="position: absolute; top: 345px; left: 71px;background-color: red;"><b>Multiply+</b></button>
+  <button id="mult-" style="position: absolute; top: 345px; left: 170px; background-color: red;"><b>Multiply-</b></button>
+</div>
+
+    <div>
+<!--make canvas-->
+<canvas id="myCanvas" width="800" height="500"></canvas>
+
+  <script>
+    //variables and getting canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var Money = 100;
+    var multValue = 1;
+    var random1 = 1;
+    var random2 = 2;
+    var random3 = 3;
+    // Load background image
+    var backgroundImage = new Image();
+    backgroundImage.src = "./images/GameBackground.png";
+    //when background image loads, call function
+    backgroundImage.onload = function() {
+        drawScene();
+    };
+    //draw the scene function
+    function drawScene() {
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "30px Arial";
-        ctx.fillText("Money: $"+ Money, 10, 50);
-    //Create button on machine screen 
-    //If button clicked check if money
-    </script>
-   
-    </div>
-   
+        ctx.fillStyle = "black";
+        ctx.fillText("Money: $" + Money, 500, 50);
+        ctx.fillStyle = "orange";
+        ctx.fillText(random1,100,243);
+        ctx.fillText(random2,195,243);
+        ctx.fillText(random3,285,243);
+        ctx.fillStyle = "blue";
+        ctx.fillText("Multiply Value: " + multValue, 65, 133);
+    }
+    // Button listener for gamble
+    document.getElementById("gbtn").addEventListener("click", function() {
+        if (Money >= 10 * multValue) {
+        Money -= 10 * multValue;
+        random1 = Math.floor(Math.random() * 10) + 1;
+        random2 = Math.floor(Math.random() * 10) + 1;
+        random3 = Math.floor(Math.random() * 10) + 1;
+        if (random1 === random2 && random2 === random3) {
+        Money = Money + random1 * 10 * multValue;
+        }
+       drawScene();
+        }});
+        //multiply+ button listener
+    document.getElementById("mult+").addEventListener("click", function() {
+        multValue++;
+        drawScene();
+    });
+    //multiply- button listen
+    document.getElementById("mult-").addEventListener("click", function() {
+        if (multValue > 1){
+        multValue--;
+        drawScene();
+    }});
+  </script>
+</div>
+   <!--Instructions on left side of screen-->
+>>>>>>> Stashed changes
     <div id="instructions">
         <h2>The Last Bet</h2>
         <p>
             To gamble press the button on the machine!
         </p>
+        <p>
+            The mulitply button will multiply the cost and your winnings!
+        </p>
     </div>
-    <!--GameObject.js contains the game object class we will use or all objects in the game-->
-    <script src="js/GameObject.js"> </script>
-    <!--game.js is the game-->
-    <script src="js/game.js"></script>
 
-    
 </body>
 </html>

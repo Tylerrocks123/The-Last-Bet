@@ -21,6 +21,3 @@ function main()
 {
 }
 
-function rand{
-  //generate random number 1-10 3 times
-}
