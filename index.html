@@ -30,6 +30,14 @@
     var random1 = 1;
     var random2 = 2;
     var random3 = 3;
+    var gameOver = false;
+    var clickImage = new Image();
+    clickImage.src = "./images/Dollar.png";
+    var imgX = 300;  
+    var imgY = 300;
+    var imgWidth = 80;
+    var imgHeight = 80;
+    var imgMoving = false;
     // Load background image
     var backgroundImage = new Image();
     backgroundImage.src = "./images/GameBackground.png";
@@ -50,25 +58,60 @@
         ctx.fillStyle = "blue";
         ctx.fillText("Multiply Value: " + multValue, 65, 133);
     }
+    function drawLose() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font="100px Arial";
+        ctx.fillStyle="red";
+        ctx.fillText("You Lose!", 100,100);
+        gameOver = true;
+    }
+    function drawWin() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font="100px Arial";
+        ctx.fillStyle="Green";
+        ctx.fillText("You won!", 100,100);
+        gameOver = true;
+    }
     // Button listener for gamble
     document.getElementById("gbtn").addEventListener("click", function() {
+         if (gameOver) return;
         if (Money >= 10 * multValue) {
         Money -= 10 * multValue;
         random1 = Math.floor(Math.random() * 10) + 1;
         random2 = Math.floor(Math.random() * 10) + 1;
         random3 = Math.floor(Math.random() * 10) + 1;
         if (random1 === random2 && random2 === random3) {
-        Money = Money + random1 * 10 * multValue;
+            Money = Money + random1 * 10 * multValue;
+        }
+        if (random1 == random3){
+            Money = Money + random1*5 * multValue;
+        }
+        if (random1 == random2){
+            Money = Money + random2*5 * multValue;
+        }
+        if(random2 == random3){
+            Money = Money + random3 *5 * multValue;
+        }
+        if(Money <10){
+            drawLose();
+            return;
+        }
+        if(Money >=100000){
+            Money = 100000;
+            drawWin();
+            return;
         }
        drawScene();
         }});
         //multiply+ button listener
     document.getElementById("mult+").addEventListener("click", function() {
+        if (gameOver) return;
         multValue++;
         drawScene();
     });
     //multiply- button listen
     document.getElementById("mult-").addEventListener("click", function() {
+        if (gameOver) return;
         if (multValue > 1){
         multValue--;
         drawScene();
