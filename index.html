@@ -1,3 +1,4 @@
+<!--basic html setup-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,13 +32,19 @@
     var random2 = 2;
     var random3 = 3;
     var gameOver = false;
-    var clickImage = new Image();
-    clickImage.src = "./images/Dollar.png";
-    var imgX = 300;  
-    var imgY = 300;
-    var imgWidth = 80;
-    var imgHeight = 80;
-    var imgMoving = false;
+    var winSound = new Audio("./Sounds/SlotWin.mp3");
+    var paymentSound = new Audio("./Sounds/InsertPayment.mp3");
+    var smallWinSound = new Audio("./Sounds/SmallWin.mp3") 
+    //Sets images to x and y and sets them to visible
+    var dollarImages = [
+    { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true }
+    ];
+    //For each image their source is Dollar.png
+    dollarImages.forEach(d => {
+    d.img.src = "./images/Dollar.png";
+    });
     // Load background image
     var backgroundImage = new Image();
     backgroundImage.src = "./images/GameBackground.png";
@@ -57,7 +64,11 @@
         ctx.fillText(random3,285,243);
         ctx.fillStyle = "blue";
         ctx.fillText("Multiply Value: " + multValue, 65, 133);
+         dollarImages.forEach(d => {
+        if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
+        });
     }
+    //when player loses this screen appears
     function drawLose() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font="100px Arial";
@@ -65,6 +76,7 @@
         ctx.fillText("You Lose!", 100,100);
         gameOver = true;
     }
+    //when player wins this is what appears
     function drawWin() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font="100px Arial";
@@ -80,17 +92,22 @@
         random1 = Math.floor(Math.random() * 10) + 1;
         random2 = Math.floor(Math.random() * 10) + 1;
         random3 = Math.floor(Math.random() * 10) + 1;
+        paymentSound.play();
         if (random1 === random2 && random2 === random3) {
             Money = Money + random1 * 10 * multValue;
+             winSound.play();
         }
         if (random1 == random3){
             Money = Money + random1*5 * multValue;
+             smallWinSound.play();
         }
         if (random1 == random2){
             Money = Money + random2*5 * multValue;
+             smallWinSound.play();
         }
         if(random2 == random3){
             Money = Money + random3 *5 * multValue;
+             smallWinSound.play();
         }
         if(Money <10){
             drawLose();
@@ -116,14 +133,29 @@
         multValue--;
         drawScene();
     }});
+    //checks if money is clicked, if it is make it disapear
+    canvas.addEventListener("click", function(event) {
+    if (gameOver) return;
+
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = event.clientX - rect.left;
+    var mouseY = event.clientY - rect.top;
+
+    dollarImages.forEach(d => {
+        if (d.visible && mouseX >= d.x && mouseX <= d.x + d.w && mouseY >= d.y && mouseY <= d.y + d.h) {
+            Money = Money + 100;
+            d.visible = false;
+            drawScene();
+        }
+    });
+    });
   </script>
 </div>
-   <!--Instructions on left side of screen-->
->>>>>>> Stashed changes
+   <!--Instructions on right side of screen-->
     <div id="instructions">
         <h2>The Last Bet</h2>
         <p>
-            To gamble press the button on the machine! Match all numbers to win!
+            To gamble for $10 press the gamble button on the machine! Match 2 or more numbers to win!
         </p>
          <p>
             Press the multiply+ or multiply- buttons to increase or decrease the multiply value!
@@ -132,7 +164,16 @@
             The mulitply value will multiply the cost and your winnings by that amount!
         </p>
          <p>
-           If you win your winnings are the matched number times 10 times the multiply value!
+           If you match 3 numbers your winnings are the matched number times 10, times the multiply value!
+        </p>
+         <p>
+           If you match 2 numbers your winnings are the matched number times 5, times the multiply value!
+        </p>
+        <p>
+           Click on any money around the screen to gain $100!
+        </p>
+        <p>
+           Gain $100,000 to win the game! But, if you drop below $10 you lose!
         </p>
     </div>
 
