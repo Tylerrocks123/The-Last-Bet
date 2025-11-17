@@ -34,7 +34,12 @@
     var gameOver = false;
     var winSound = new Audio("./Sounds/SlotWin.mp3");
     var paymentSound = new Audio("./Sounds/InsertPayment.mp3");
-    var smallWinSound = new Audio("./Sounds/SmallWin.mp3") 
+    var smallWinSound = new Audio("./Sounds/SmallWin.mp3");
+    var addMultSound = new Audio("./Sounds/AddMult.wav");
+    var minusMultSound = new Audio("./Sounds/MinusMult.mp3");
+    var winnningSound = new Audio("./Sounds/WinSound.mp3");
+    var losingSound = new Audio("./Sounds/LoseSound.mp3");
+    var MoneySound = new Audio("./Sounds/MoneyCollect.mp3");
     //Sets images to x and y and sets them to visible
     var dollarImages = [
     { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
@@ -74,6 +79,7 @@
         ctx.font="100px Arial";
         ctx.fillStyle="red";
         ctx.fillText("You Lose!", 100,100);
+        losingSound.play();
         gameOver = true;
     }
     //when player wins this is what appears
@@ -82,6 +88,7 @@
         ctx.font="100px Arial";
         ctx.fillStyle="Green";
         ctx.fillText("You won!", 100,100);
+        winnningSound.play();
         gameOver = true;
     }
     // Button listener for gamble
@@ -124,6 +131,7 @@
     document.getElementById("mult+").addEventListener("click", function() {
         if (gameOver) return;
         multValue++;
+        addMultSound.play();
         drawScene();
     });
     //multiply- button listen
@@ -131,6 +139,7 @@
         if (gameOver) return;
         if (multValue > 1){
         multValue--;
+        minusMultSound.play();
         drawScene();
     }});
     //checks if money is clicked, if it is make it disapear
@@ -145,6 +154,7 @@
         if (d.visible && mouseX >= d.x && mouseX <= d.x + d.w && mouseY >= d.y && mouseY <= d.y + d.h) {
             Money = Money + 100;
             d.visible = false;
+            MoneySound.play();
             drawScene();
         }
     });
