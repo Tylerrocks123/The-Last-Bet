@@ -15,6 +15,7 @@ canvas{
        sets the canvas border
     */
     border:2px solid white;
+    background-color: black;
 }
 
 #instructions{
