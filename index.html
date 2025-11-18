@@ -1,3 +1,4 @@
+<!--basic html setup-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,60 +7,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <title>The Last Bet</title>
-    
 </head>
 <body>
-    <!-- Start of my stuff -->
-    <input type="button" id="btn" value="click me!">
-    <!-- End of my stuff -->
+    <!--<img id="dollar" width="200" height="200"
+    src="/images/d.jpg" alt="Dollar"> -->
     <div>
-        <canvas id="myCanvas" width="800" height="500"></canvas>
-        <!-- Display Money var on screen-->
-       <script>
-        //Start of my stuff
-        var clickButton = document.getElementById("btn")
-        var output = document.getElementById("output")
-        //End of my stuff
-        
-        var Money = 1000
-        var clicksButton = 1
+         <!--button-->
+  <button id="gbtn" style="position: absolute; top: 345px; left: 268px;background-color: red;"><b>Gamble!</b></button>
+  <button id="mult+" style="position: absolute; top: 345px; left: 71px;background-color: red;"><b>Multiply+</b></button>
+  <button id="mult-" style="position: absolute; top: 345px; left: 170px; background-color: red;"><b>Multiply-</b></button>
+</div>
 
+    <div>
+<!--make canvas-->
+<canvas id="myCanvas" width="800" height="500"></canvas>
 
-        //Start of my stuff
-        function increment()
-{
-    //add clicks
-    Money -= clicksButton;
-
-    //change the innerHTML to the current amount of clicks
-    output.innerHTML = Money;
-
-
-}
-        //End of my stuff
-        clickButton.addEventListener("click",increment)
-
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d");
+  <script>
+    //variables and getting canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var Money = 100;
+    var multValue = 1;
+    var random1 = 1;
+    var random2 = 2;
+    var random3 = 3;
+    var gameOver = false;
+    var winSound = new Audio("./Sounds/SlotWin.mp3");
+    var paymentSound = new Audio("./Sounds/InsertPayment.mp3");
+    var smallWinSound = new Audio("./Sounds/SmallWin.mp3");
+    var addMultSound = new Audio("./Sounds/AddMult.wav");
+    var minusMultSound = new Audio("./Sounds/MinusMult.mp3");
+    var winnningSound = new Audio("./Sounds/WinSound.mp3");
+    var losingSound = new Audio("./Sounds/LoseSound.mp3");
+    var MoneySound = new Audio("./Sounds/MoneyCollect.mp3");
+    //Sets images to x and y and sets them to visible
+    var dollarImages = [
+    { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true }
+    ];
+    //For each image their source is Dollar.png
+    dollarImages.forEach(d => {
+    d.img.src = "./images/Dollar.png";
+    });
+    // Load background image
+    var backgroundImage = new Image();
+    backgroundImage.src = "./images/GameBackground.png";
+    //when background image loads, call function
+    backgroundImage.onload = function() {
+        drawScene();
+    };
+    //draw the scene function
+    function drawScene() {
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
         ctx.font = "30px Arial";
-        ctx.fillText("Money: $"+ Money, 10, 50);
-    //Create button on machine screen 
-    //If button clicked check if money
-    </script>
-   
-    </div>
-   
+        ctx.fillStyle = "black";
+        ctx.fillText("Money: $" + Money, 500, 50);
+        ctx.fillStyle = "orange";
+        ctx.fillText(random1,100,243);
+        ctx.fillText(random2,195,243);
+        ctx.fillText(random3,285,243);
+        ctx.fillStyle = "blue";
+        ctx.fillText("Multiply Value: " + multValue, 65, 133);
+         dollarImages.forEach(d => {
+        if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
+        });
+    }
+    //when player loses this screen appears
+    function drawLose() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font="100px Arial";
+        ctx.fillStyle="red";
+        ctx.fillText("You Lose!", 100,100);
+        losingSound.play();
+        gameOver = true;
+    }
+    //when player wins this is what appears
+    function drawWin() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font="100px Arial";
+        ctx.fillStyle="Green";
+        ctx.fillText("You won!", 100,100);
+        winnningSound.play();
+        gameOver = true;
+    }
+    // Button listener for gamble
+    document.getElementById("gbtn").addEventListener("click", function() {
+         if (gameOver) return;
+        if (Money >= 10 * multValue) {
+        Money -= 10 * multValue;
+        random1 = Math.floor(Math.random() * 10) + 1;
+        random2 = Math.floor(Math.random() * 10) + 1;
+        random3 = Math.floor(Math.random() * 10) + 1;
+        paymentSound.play();
+        if (random1 === random2 && random2 === random3) {
+            Money = Money + random1 * 10 * multValue;
+             winSound.play();
+        }
+        if (random1 == random3){
+            Money = Money + random1*5 * multValue;
+             smallWinSound.play();
+        }
+        if (random1 == random2){
+            Money = Money + random2*5 * multValue;
+             smallWinSound.play();
+        }
+        if(random2 == random3){
+            Money = Money + random3 *5 * multValue;
+             smallWinSound.play();
+        }
+        if(Money <10){
+            drawLose();
+            return;
+        }
+        if(Money >=100000){
+            Money = 100000;
+            drawWin();
+            return;
+        }
+       drawScene();
+        }});
+        //multiply+ button listener
+    document.getElementById("mult+").addEventListener("click", function() {
+        if (gameOver) return;
+        multValue++;
+        addMultSound.play();
+        drawScene();
+    });
+    //multiply- button listen
+    document.getElementById("mult-").addEventListener("click", function() {
+        if (gameOver) return;
+        if (multValue > 1){
+        multValue--;
+        minusMultSound.play();
+        drawScene();
+    }});
+    //checks if money is clicked, if it is make it disapear
+    canvas.addEventListener("click", function(event) {
+    if (gameOver) return;
+
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = event.clientX - rect.left;
+    var mouseY = event.clientY - rect.top;
+
+    dollarImages.forEach(d => {
+        if (d.visible && mouseX >= d.x && mouseX <= d.x + d.w && mouseY >= d.y && mouseY <= d.y + d.h) {
+            Money = Money + 100;
+            d.visible = false;
+            MoneySound.play();
+            drawScene();
+        }
+    });
+    });
+  </script>
+</div>
+   <!--Instructions on right side of screen-->
     <div id="instructions">
         <h2>The Last Bet</h2>
         <p>
-            To gamble press the button on the machine!
+            To gamble for $10 press the gamble button on the machine! Match 2 or more numbers to win!
+        </p>
+         <p>
+            Press the multiply+ or multiply- buttons to increase or decrease the multiply value!
+        </p>
+        <p>
+            The mulitply value will multiply the cost and your winnings by that amount!
+        </p>
+         <p>
+           If you match 3 numbers your winnings are the matched number times 10, times the multiply value!
+        </p>
+         <p>
+           If you match 2 numbers your winnings are the matched number times 5, times the multiply value!
+        </p>
+        <p>
+           Click on any money around the screen to gain $100!
+        </p>
+        <p>
+           Gain $100,000 to win the game! But, if you drop below $10 you lose!
         </p>
     </div>
-    <!--GameObject.js contains the game object class we will use or all objects in the game-->
-    <script src="js/GameObject.js"> </script>
-    <!--game.js is the game-->
-    <script src="js/game.js"></script>
 
-    
 </body>
 </html>
