@@ -13,6 +13,7 @@
     <input type="button" id="btn" value="click me!">
     <!-- End of my stuff -->
     <div>
+<<<<<<< Updated upstream
         <canvas id="myCanvas" width="800" height="500"></canvas>
         <!-- Display Money var on screen-->
        <script>
@@ -23,6 +24,214 @@
         
         var Money = 1000
         var clicksButton = 1
+=======
+        <!-- box image -->
+  <img id="box" src="./images/1box.png"  alt="Bill" style="position:absolute; top:229px; left:650px; width:120px; height:120px;cursor: pointer;">
+         <!--button-->
+  <button id="gbtn" style="position: absolute; top: 345px; left: 268px;background-color: red;cursor: pointer; opacity: 0; " ><b>Gamble!</b></button> 
+  <button id="mult+" style="position: absolute; top: 345px; left: 71px;background-color: red;cursor: pointer; opacity: 0;"><b>Multiply+</b></button>
+  <button id="mult-" style="position: absolute; top: 345px; left: 170px; background-color: red;cursor: pointer; opacity: 0;"><b>Multiply-</b></button>
+</div>
+
+    <div>
+<!--make canvas-->
+<canvas id="myCanvas" width="800" height="500"></canvas>
+
+  <script>
+
+    //variables and getting canvas
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var Money = 100;
+    var multValue = 10;
+    var random1 = 1;
+    var random2 = 2;
+    var random3 = 3;
+    var gameOver = false;
+    var winSound = new Audio("./Sounds/SlotWin.mp3");
+    var paymentSound = new Audio("./Sounds/InsertPayment.mp3");
+    var smallWinSound = new Audio("./Sounds/SmallWin.mp3");
+    var addMultSound = new Audio("./Sounds/AddMult.wav");
+    var minusMultSound = new Audio("./Sounds/MinusMult.mp3");
+    var winnningSound = new Audio("./Sounds/WinSound.mp3");
+    var losingSound = new Audio("./Sounds/LoseSound.mp3");
+    var MoneySound = new Audio("./Sounds/MoneyCollect.mp3");
+    //Sets images to x and y and sets them to visible
+    
+    var blackVoid = [ //want to add a new photo that has no function other than being under the door
+    { img: new Image(), x: 550, y: 100, w: 100, h: 100, visible: true }
+    ];
+    
+    var dollarImages = [
+    { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 532, y: 420, w: 60, h: 60, visible: true }
+    ];
+
+    var box = [  //this is going to be where the mini game is going to go
+    { img: new Image(), x: 500, y: 100, w: 100, h: 100, visible: true }
+    ];
+
+    //For each image their source is Dollar.png
+    dollarImages.forEach(d => {
+    d.img.src = "./images/Dollar.png";
+    });
+    box.forEach(d => {
+    d.img.src = "./images/1box.png";
+    });
+
+    // Load background image
+    var backgroundImage = new Image();
+    backgroundImage.src = "./images/GameBackground.png";
+    //when background image loads, call function
+    backgroundImage.onload = function() {
+        drawScene();
+    };
+    //draw the scene function
+    function drawScene() {
+
+        ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "black"; // border for money box
+        ctx.fillRect(495, 20, 300, 40); // outer box
+        ctx.fillStyle = "lightyellow"; //  box background for money
+        ctx.fillRect(500, 25, 290, 30); 
+        ctx.font = "bold 12px Verdana";
+               // shadow settings
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 0.1;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
+        ctx.fillStyle = "white";
+        ctx.fillText("Multiply+        Multiply-         Gamble!", 68, 350);
+
+        ctx.font = "bold 30px Arial black";
+        ctx.fillStyle = "green";
+        ctx.fillText("Money: $" + Money, 500, 50);
+
+        // reset shadow so other drawings don’t get shadowed
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.fillStyle = "orange";
+        ctx.font = "bold 30px Georgia";
+        ctx.fillText(random1,100,243);
+        ctx.fillText(random2,195,243);
+        ctx.fillText(random3,285,243);
+        ctx.fillStyle = "blue";
+        ctx.font = "bold 26px RoyalFlush";
+        ctx.fillText("Multiply Value: " + multValue, 99, 133);
+         dollarImages.forEach(d => {
+        if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
+        });
+         box.forEach(d => {
+        if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
+        });
+    }
+    //when player loses this screen appears
+    function drawLose() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font="bold 90px Arial";
+        ctx.fillStyle="red";
+        ctx.fillText("You Lose! ", 100,100);
+        ctx.fillText("You're Out of Cash!", 1,200);
+        ctx.font="bold 20px Arial";
+        ctx.fillStyle="black";
+        ctx.fillText("To restart just reset the page", 300,250);
+        losingSound.play();
+        gameOver = true;
+    }
+    //when player wins this is what appears
+    function drawWin() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.font="100px Arial";
+        ctx.fillStyle="Green";
+        ctx.fillText("You won!", 100,100);
+        winnningSound.play();
+        gameOver = true;
+    }
+
+    // Button listener for gamble
+    document.getElementById("gbtn").addEventListener("click", function() {
+         if (gameOver) return;
+        if (Money >= 10 * multValue) {
+        Money -= 10 * multValue;
+        random1 = Math.floor(Math.random() * 10) + 1;
+        random2 = Math.floor(Math.random() * 10) + 1;
+        random3 = Math.floor(Math.random() * 10) + 1;
+        paymentSound.play();
+        if (random1 === random2 && random2 === random3) {
+            Money = Money + random1 * 10 * multValue;
+             winSound.play();
+        }
+        if (random1 == random3){
+            Money = Money + random1*5 * multValue;
+             smallWinSound.play();
+        }
+        if (random1 == random2){
+            Money = Money + random2*5 * multValue;
+             smallWinSound.play();
+        }
+        if(random2 == random3){
+            Money = Money + random3 *5 * multValue;
+             smallWinSound.play();
+        }
+        if(Money <10){
+            drawLose();
+            return;
+        }
+        if(Money >=100000){
+            Money = 100000;
+            drawWin();
+            return;
+        }
+       drawScene();
+        }});
+        //multiply+ button listener
+    document.getElementById("mult+").addEventListener("click", function() {
+        if (gameOver) return;
+        multValue++;
+        addMultSound.play();
+        drawScene();
+    });
+    //multiply- button listen
+    document.getElementById("mult-").addEventListener("click", function() {
+        if (gameOver) return;
+        if (multValue > 1){
+        multValue--;
+        minusMultSound.play();
+        drawScene();
+    }});
+
+    // function for box
+    document.getElementById("box").addEventListener("click", function() { 
+
+        this.style.left = "695px";  //top:229px; left:650px; 
+        this.style.top = "229px";
+              if (gameOver) return;
+        drawScene();
+    });
+
+    //checks if money is clicked, if it is make it disapear
+    canvas.addEventListener("click", function(event) {
+    
+ 
+    var rect = canvas.getBoundingClientRect();
+    var mouseX = event.clientX - rect.left;
+    var mouseY = event.clientY - rect.top;
+if (gameOver) return;
+
+    dollarImages.forEach(d => {
+        if (d.visible && mouseX >= d.x && mouseX <= d.x + d.w && mouseY >= d.y && mouseY <= d.y + d.h) {
+            Money = Money + 100;
+            d.visible = false;
+            MoneySound.play();
+            drawScene();
+        }
+    });
+>>>>>>> Stashed changes
 
 
         //Start of my stuff
