@@ -66,20 +66,20 @@
     function drawScene() {
 
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "black"; // border color
+        ctx.fillStyle = "black"; // border for money box
         ctx.fillRect(495, 20, 300, 40); // outer box
-        ctx.fillStyle = "lightyellow"; // inner background
+        ctx.fillStyle = "lightyellow"; //  box background for money
         ctx.fillRect(500, 25, 290, 30); 
-        ctx.font = "bold 14px Verdana";
+        ctx.font = "bold 12px Verdana";
         ctx.fillStyle = "black";
-        ctx.fillText("Multiply+", 65, 350);
-        ctx.fillText("Multiply-", 165, 350);
-        ctx.fillText("Gamble!", 263, 350);
-        ctx.font = "bold 14px Verdana";
+        ctx.fillText("Multiply+", 68, 350);
+        ctx.fillText("Multiply-", 168, 350);
+        ctx.fillText("Gamble!", 266, 350);
+        ctx.font = "bold 12px Verdana";
         ctx.fillStyle = "white";
-        ctx.fillText("Multiply+", 64, 349);
-        ctx.fillText("Multiply-", 164, 349);
-        ctx.fillText("Gamble!", 262, 349);
+        ctx.fillText("Multiply+", 67, 349);
+        ctx.fillText("Multiply-", 167, 349);
+        ctx.fillText("Gamble!", 265, 349);
         ctx.font = "bold 30px Arial black";
         ctx.fillStyle = "black";
         ctx.fillText("Money: $" + Money, 502, 52);
@@ -180,9 +180,10 @@
 
     // function for box
     document.getElementById("box").addEventListener("click", function() { 
-        if (gameOver) return;
+
         this.style.left = "695px";  //top:229px; left:650px; 
         this.style.top = "229px";
+              if (gameOver) return;
         drawScene();
     });
 
