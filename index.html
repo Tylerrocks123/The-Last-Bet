@@ -12,10 +12,12 @@
     <!--<img id="dollar" width="200" height="200"
     src="/images/d.jpg" alt="Dollar"> -->
     <div>
+        <!-- box image -->
+  <img id="box" src="./images/1box.png"  alt="Bill" style="position:absolute; top:229px; left:650px; width:120px; height:120px;cursor: pointer;">
          <!--button-->
-  <button id="gbtn" style="position: absolute; top: 345px; left: 268px;background-color: red;"><b>Gamble!</b></button>
-  <button id="mult+" style="position: absolute; top: 345px; left: 71px;background-color: red;"><b>Multiply+</b></button>
-  <button id="mult-" style="position: absolute; top: 345px; left: 170px; background-color: red;"><b>Multiply-</b></button>
+  <button id="gbtn" style="position: absolute; top: 345px; left: 268px;background-color: red;cursor: pointer; opacity: 0; " ><b>Gamble!</b></button> 
+  <button id="mult+" style="position: absolute; top: 345px; left: 71px;background-color: red;cursor: pointer; opacity: 0;"><b>Multiply+</b></button>
+  <button id="mult-" style="position: absolute; top: 345px; left: 170px; background-color: red;cursor: pointer; opacity: 0;"><b>Multiply-</b></button>
 </div>
 
     <div>
@@ -23,6 +25,7 @@
 <canvas id="myCanvas" width="800" height="500"></canvas>
 
   <script>
+
     //variables and getting canvas
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
@@ -46,10 +49,12 @@
     { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
     { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true }
     ];
+
     //For each image their source is Dollar.png
     dollarImages.forEach(d => {
     d.img.src = "./images/Dollar.png";
     });
+
     // Load background image
     var backgroundImage = new Image();
     backgroundImage.src = "./images/GameBackground.png";
@@ -59,17 +64,40 @@
     };
     //draw the scene function
     function drawScene() {
+
         ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-        ctx.font = "30px Arial";
+        ctx.fillStyle = "black"; // border color
+        ctx.fillRect(495, 20, 300, 40); // outer box
+        ctx.fillStyle = "lightyellow"; // inner background
+        ctx.fillRect(500, 25, 290, 30); 
+        ctx.font = "bold 14px Verdana";
         ctx.fillStyle = "black";
+        ctx.fillText("Multiply+", 65, 350);
+        ctx.fillText("Multiply-", 165, 350);
+        ctx.fillText("Gamble!", 263, 350);
+        ctx.font = "bold 14px Verdana";
+        ctx.fillStyle = "white";
+        ctx.fillText("Multiply+", 64, 349);
+        ctx.fillText("Multiply-", 164, 349);
+        ctx.fillText("Gamble!", 262, 349);
+        ctx.font = "bold 30px Arial black";
+        ctx.fillStyle = "black";
+        ctx.fillText("Money: $" + Money, 502, 52);
+        ctx.fillStyle = "green";
         ctx.fillText("Money: $" + Money, 500, 50);
         ctx.fillStyle = "orange";
+        ctx.font = "bold 30px Georgia";
+        ctx.font = "bold 32px ";
         ctx.fillText(random1,100,243);
         ctx.fillText(random2,195,243);
         ctx.fillText(random3,285,243);
         ctx.fillStyle = "blue";
-        ctx.fillText("Multiply Value: " + multValue, 65, 133);
+        ctx.font = "bold 26px Royal Flush";
+        ctx.fillText("Multiply Value: " + multValue, 99, 133);
          dollarImages.forEach(d => {
+        if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
+        });
+         boxImages.forEach(d => {
         if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
         });
     }
@@ -78,7 +106,13 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.font="100px Arial";
         ctx.fillStyle="red";
-        ctx.fillText("You Lose!", 100,100);
+        ctx.fillText("You Lose! ", 100,100);
+        ctx.font="80px Arial";
+        ctx.fillText("You’re Out of Cash!", 100,200);
+        ctx.font="20px Arial";
+        ctx.fillStyle="white";
+        ctx.fillText("You can click this box -->", 400,300);
+        ctx.fillText("To restart just reset the page", 300,250);
         losingSound.play();
         gameOver = true;
     }
@@ -91,6 +125,7 @@
         winnningSound.play();
         gameOver = true;
     }
+
     // Button listener for gamble
     document.getElementById("gbtn").addEventListener("click", function() {
          if (gameOver) return;
@@ -142,13 +177,23 @@
         minusMultSound.play();
         drawScene();
     }});
+
+    // function for box
+    document.getElementById("box").addEventListener("click", function() { 
+        if (gameOver) return;
+        this.style.left = "695px";  //top:229px; left:650px; 
+        this.style.top = "229px";
+        drawScene();
+    });
+
     //checks if money is clicked, if it is make it disapear
     canvas.addEventListener("click", function(event) {
-    if (gameOver) return;
-
+    
+ 
     var rect = canvas.getBoundingClientRect();
     var mouseX = event.clientX - rect.left;
     var mouseY = event.clientY - rect.top;
+if (gameOver) return;
 
     dollarImages.forEach(d => {
         if (d.visible && mouseX >= d.x && mouseX <= d.x + d.w && mouseY >= d.y && mouseY <= d.y + d.h) {
@@ -158,7 +203,11 @@
             drawScene();
         }
     });
+
+
+
     });
+    
   </script>
 </div>
    <!--Instructions on right side of screen-->
