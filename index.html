@@ -71,19 +71,24 @@
         ctx.fillStyle = "lightyellow"; //  box background for money
         ctx.fillRect(500, 25, 290, 30); 
         ctx.font = "bold 12px Verdana";
-        ctx.fillStyle = "black";
-        ctx.fillText("Multiply+", 68, 350);
-        ctx.fillText("Multiply-", 168, 350);
-        ctx.fillText("Gamble!", 266, 350);
+               // shadow settings
+        ctx.shadowColor = "black";
+        ctx.shadowBlur = 0.1;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+
         ctx.fillStyle = "white";
-        ctx.fillText("Multiply+", 67, 349);
-        ctx.fillText("Multiply-", 167, 349);
-        ctx.fillText("Gamble!", 265, 349);
+        ctx.fillText("Multiply+        Multiply-         Gamble!", 68, 350);
+
         ctx.font = "bold 30px Arial black";
-        ctx.fillStyle = "black";
-        ctx.fillText("Money: $" + Money, 502, 52);
         ctx.fillStyle = "green";
         ctx.fillText("Money: $" + Money, 500, 50);
+
+        // reset shadow so other drawings don’t get shadowed
+        ctx.shadowColor = "transparent";
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
         ctx.fillStyle = "orange";
         ctx.font = "bold 30px Georgia";
         ctx.fillText(random1,100,243);
