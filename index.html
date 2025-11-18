@@ -75,7 +75,6 @@
         ctx.fillText("Multiply+", 68, 350);
         ctx.fillText("Multiply-", 168, 350);
         ctx.fillText("Gamble!", 266, 350);
-        ctx.font = "bold 12px Verdana";
         ctx.fillStyle = "white";
         ctx.fillText("Multiply+", 67, 349);
         ctx.fillText("Multiply-", 167, 349);
@@ -87,12 +86,11 @@
         ctx.fillText("Money: $" + Money, 500, 50);
         ctx.fillStyle = "orange";
         ctx.font = "bold 30px Georgia";
-        ctx.font = "bold 32px ";
         ctx.fillText(random1,100,243);
         ctx.fillText(random2,195,243);
         ctx.fillText(random3,285,243);
         ctx.fillStyle = "blue";
-        ctx.font = "bold 26px Royal Flush";
+        ctx.font = "bold 26px RoyalFlush";
         ctx.fillText("Multiply Value: " + multValue, 99, 133);
          dollarImages.forEach(d => {
         if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
@@ -104,13 +102,12 @@
     //when player loses this screen appears
     function drawLose() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.font="100px Arial";
+        ctx.font="bold 90px Arial";
         ctx.fillStyle="red";
         ctx.fillText("You Lose! ", 100,100);
-        ctx.font="80px Arial";
-        ctx.fillText("You're Out of Cash!", 100,200);
-        ctx.font="20px Arial";
-        ctx.fillStyle="white";
+        ctx.fillText("You're Out of Cash!", 1,200);
+        ctx.font="bold 20px Arial";
+        ctx.fillStyle="black";
         ctx.fillText("To restart just reset the page", 300,250);
         losingSound.play();
         gameOver = true;
