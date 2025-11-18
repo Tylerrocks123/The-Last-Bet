@@ -6,23 +6,37 @@ body{
     display:flex;
     justify-content: flex-start;
     align-items: flex-start;
+    background-color: black;
+    background-image: url("../images/BackgroundMoney.png");
 }
+
 canvas{
-    border:2px solid black;
-    /*background-image: url(../images/GameArt);*/
+    /*
+       sets the canvas border
+    */
+    border:2px solid white;
+    background-color: black;
 }
+
 #instructions{
+    /*
+       sets up the instruction text
+    */
+    color:white;
+    font-size: 15.8px;
+    font-style: italic;
+    font-family: sans-serif;
+    background-color: black;
     width:300px;
     padding:0 20px 20px 20px;
-    margin-left: 20px;
+    margin-left: 20px
 }
+
 h2{
-    font-family:Arial, Helvetica, sans-serif;
-}
-h2 span{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:16px;
-    font-weight:normal;
+    /*
+       h2 setup
+    */
+    font-family: sans-serif;
 }
 
 .game-img{
@@ -31,3 +45,4 @@ h2 span{
     */
     display:none;
 }
+
