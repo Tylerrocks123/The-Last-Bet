@@ -7,6 +7,7 @@ body{
     justify-content: flex-start;
     align-items: flex-start;
     background-color: black;
+    background-image: url("../images/BackgroundMoney.jpg");
 }
 
 canvas{
@@ -21,9 +22,12 @@ canvas{
        sets up the instruction text
     */
     color:white;
+    font-size: 15.8px;
+    font-family: sans-serif;
+    background-color: black;
     width:300px;
     padding:0 20px 20px 20px;
-    margin-left: 20px;
+    margin-left: 20px
 }
 
 h2{
