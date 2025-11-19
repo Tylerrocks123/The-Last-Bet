@@ -12,10 +12,12 @@
     <!--<img id="dollar" width="200" height="200"
     src="/images/d.jpg" alt="Dollar"> -->
     <div>
-        <!-- box image -->
+        <!-- image -->
   <img id="box" src="./images/1box.png"  alt="Bill" style="position:absolute; top:229px; left:650px; width:120px; height:120px;cursor: pointer;">
-         <!--button-->
-  <button id="gbtn" style="position: absolute; top: 345px; left: 268px;background-color: red;cursor: pointer; opacity: 0; " ><b>Gamble!</b></button> 
+  <img id="wash" src="./images/washdoor.png"  alt="Bill" style="position:absolute; top:350px; left:458px; width:280px; height:160px;cursor: pointer;">
+
+        <!--button-->
+  <button id="gbtn" style="position: absolute; top:  345px; left: 268px;background-color: red;cursor: pointer; opacity: 0; " ><b>Gamble!</b></button> 
   <button id="mult+" style="position: absolute; top: 345px; left: 71px;background-color: red;cursor: pointer; opacity: 0;"><b>Multiply+</b></button>
   <button id="mult-" style="position: absolute; top: 345px; left: 170px; background-color: red;cursor: pointer; opacity: 0;"><b>Multiply-</b></button>
 </div>
@@ -30,7 +32,7 @@
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var Money = 100;
-    var multValue = 1;
+    var multValue = 10;
     var random1 = 1;
     var random2 = 2;
     var random3 = 3;
@@ -43,11 +45,17 @@
     var winnningSound = new Audio("./Sounds/WinSound.mp3");
     var losingSound = new Audio("./Sounds/LoseSound.mp3");
     var MoneySound = new Audio("./Sounds/MoneyCollect.mp3");
+    //new image behind washing door
+
+
     //Sets images to x and y and sets them to visible
+    
+    
     var dollarImages = [
     { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
     { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
-    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true }
+    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true },
+    { img: new Image(), x: 472, y: 420, w: 60, h: 60, visible: true }
     ];
 
     //For each image their source is Dollar.png
@@ -71,20 +79,17 @@
         ctx.fillStyle = "lightyellow"; //  box background for money
         ctx.fillRect(500, 25, 290, 30); 
         ctx.font = "bold 12px Verdana";
-               // shadow settings
+               // shadow
         ctx.shadowColor = "black";
         ctx.shadowBlur = 0.1;
         ctx.shadowOffsetX = 2;
         ctx.shadowOffsetY = 2;
-
         ctx.fillStyle = "white";
         ctx.fillText("Multiply+        Multiply-         Gamble!", 68, 350);
-
         ctx.font = "bold 30px Arial black";
         ctx.fillStyle = "green";
         ctx.fillText("Money: $" + Money, 500, 50);
-
-        // reset shadow so other drawings don’t get shadowed
+        // reset shadow so other things don’t get shadowed
         ctx.shadowColor = "transparent";
         ctx.shadowBlur = 0;
         ctx.shadowOffsetX = 0;
@@ -100,10 +105,13 @@
          dollarImages.forEach(d => {
         if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
         });
-         boxImages.forEach(d => {
+         box.forEach(d => {
         if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
         });
     }
+
+
+    
     //when player loses this screen appears
     function drawLose() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -184,6 +192,17 @@
 
         this.style.left = "695px";  //top:229px; left:650px; 
         this.style.top = "229px";
+              if (gameOver) return;
+        drawScene();
+    });
+
+    //function for the door
+    //position:absolute; top:350px; left:458px; width:280px; height:160px;
+        document.getElementById("wash").addEventListener("click", function() { 
+
+        this.style.left = "588px";  //top:229px; left:650px; 
+        this.style.top = "350px";
+        this.style.width = "140px";
               if (gameOver) return;
         drawScene();
     });
