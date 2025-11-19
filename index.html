@@ -12,21 +12,6 @@
     <!--<img id="dollar" width="200" height="200"
     src="/images/d.jpg" alt="Dollar"> -->
     <div>
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-        <canvas id="myCanvas" width="800" height="500"></canvas>
-        <!-- Display Money var on screen-->
-       <script>
-        //Start of my stuff
-        var clickButton = document.getElementById("btn")
-        var output = document.getElementById("output")
-        //End of my stuff
-        
-        var Money = 1000
-        var clicksButton = 1
-=======
-=======
->>>>>>> main
         <!-- box image -->
   <img id="box" src="./images/1box.png"  alt="Bill" style="position:absolute; top:229px; left:650px; width:120px; height:120px;cursor: pointer;">
          <!--button-->
@@ -45,15 +30,7 @@
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var Money = 100;
-<<<<<<< Updated upstream
-<<<<<<< HEAD
     var multValue = 10;
-=======
-    var multValue = 1;
->>>>>>> main
-=======
-    var multValue = 10;
->>>>>>> Stashed changes
     var random1 = 1;
     var random2 = 2;
     var random3 = 3;
@@ -67,16 +44,11 @@
     var losingSound = new Audio("./Sounds/LoseSound.mp3");
     var MoneySound = new Audio("./Sounds/MoneyCollect.mp3");
     //Sets images to x and y and sets them to visible
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
     
     var blackVoid = [ //want to add a new photo that has no function other than being under the door
     { img: new Image(), x: 550, y: 100, w: 100, h: 100, visible: true }
     ];
     
-<<<<<<< Updated upstream
     var dollarImages = [
     { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
     { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
@@ -86,41 +58,15 @@
 
     var box = [  //this is going to be where the mini game is going to go
     { img: new Image(), x: 500, y: 100, w: 100, h: 100, visible: true }
-=======
-    var dollarImages = [
-    { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
-    { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
-    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true }
->>>>>>> main
-=======
-    var dollarImages = [
-    { img: new Image(), x: 500, y: 259, w: 60, h: 60, visible: true },
-    { img: new Image(), x: 670, y: 259, w: 60, h: 60, visible: true },
-    { img: new Image(), x: 332, y: 468, w: 60, h: 60, visible: true },
-    { img: new Image(), x: 532, y: 420, w: 60, h: 60, visible: true }
-    ];
-
-    var box = [  //this is going to be where the mini game is going to go
-    { img: new Image(), x: 500, y: 100, w: 100, h: 100, visible: true }
->>>>>>> Stashed changes
     ];
 
     //For each image their source is Dollar.png
     dollarImages.forEach(d => {
     d.img.src = "./images/Dollar.png";
     });
-<<<<<<< Updated upstream
-<<<<<<< HEAD
     box.forEach(d => {
     d.img.src = "./images/1box.png";
     });
-=======
->>>>>>> main
-=======
-    box.forEach(d => {
-    d.img.src = "./images/1box.png";
-    });
->>>>>>> Stashed changes
 
     // Load background image
     var backgroundImage = new Image();
@@ -167,15 +113,7 @@
          dollarImages.forEach(d => {
         if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
         });
-<<<<<<< Updated upstream
-<<<<<<< HEAD
          box.forEach(d => {
-=======
-         boxImages.forEach(d => {
->>>>>>> main
-=======
-         box.forEach(d => {
->>>>>>> Stashed changes
         if (d.visible) ctx.drawImage(d.img, d.x, d.y, d.w, d.h);
         });
     }
@@ -280,10 +218,6 @@ if (gameOver) return;
             drawScene();
         }
     });
-<<<<<<< HEAD
->>>>>>> Stashed changes
-=======
->>>>>>> main
 
 
 
